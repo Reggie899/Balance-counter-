@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance Counter</title>
+    <link rel="stylesheet" href="styles.css">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+
+        class App extends React.Component {
+  state = {
+    balance: 0
+  };
+
+  componentDidMount() {
+                const balance = localStorage.getItem('balance');
+                if (balance !== null) {
+                    this.setState({
+                        balance: parseInt(balance)
+                    });
+                }
+                window.addEventListener('beforeunload', () => {
+                    localStorage.setItem('balance', this.state.balance);
+                });
+            }
+
+  handleSubmitAdd = (e) => {
+    e.preventDefault();
+    this.setState({ balance: (parseInt(this.state.balance) + parseInt(this.state.num)) });
+    e.target.reset();
+}
+
+handleSubmitWithdraw = (e) => {
+    e.preventDefault();
+    this.setState({ balance: (parseInt(this.state.balance) - parseInt(this.state.num)) });
+    e.target.reset();
+}
+
+  render() {
+    return ( 
+      <div className="App">
+        <h1>Your current balance: {this.state.balance} </h1>
+
+        <form onSubmit={this.handleSubmitAdd} id="addForm">
+            <div className="box">
+          <input
+            type="text"
+            placeholder="Enter Amount"
+             onChange={(e) => this.setState({ num: e.target.value })}
+          />
+          <button type="submit">Add Money</button>
+        </div>
+        </form>
+        <form onSubmit={this.handleSubmitWithdraw} id="withdrawForm">
+            <div className="box">
+          <input
+            type="text"
+            placeholder="Enter Amount"
+            onChange={(e) => this.setState({ num: e.target.value })}
+          />
+          <button type="submit">Withdraw Money</button>
+        </div>
+
+        </form>
+      </div>
+    );
+  }
+}
+
+        const root = ReactDOM.createRoot(
+            document.getElementById('root')
+        );
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

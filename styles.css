@@ -1,0 +1,65 @@
+.App {
+    text-align: center;
+    margin-top: 120px;
+    min-height: 60vh;
+    background-color: rgba(25, 96, 202, 0.829);
+    font-family: monospace;
+    padding-bottom: 30px;
+}
+
+.App h1 {
+    color: whitesmoke;
+    font-size: 35px;
+    margin-bottom: 50px;
+    padding: 50px 10% 0 10%;
+
+}
+
+.App input {
+    height: 90%;
+    width: 250px;
+    font-size: 30px;
+    bottom: 0;
+    left: 600px;
+}
+
+.App input::placeholder,
+button {
+    font-family: monospace;
+text-align: center;}
+
+.App button {
+    color: white;
+    letter-spacing: 1.5px;
+    padding: 5px;
+    background-color: rgba(45, 238, 132, 0.61);
+    width: 230px;
+    height: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 2px;
+}
+
+.App .box {
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 500px) {
+    body {
+        background-color: rgba(25, 96, 202, 0.829);
+    }
+    .App {
+        background-color: transparent;
+        margin-top: 10px;
+    }
+    .App .box {
+        margin-bottom: 40%;
+    }
+    .App button {
+        margin-top: 1%;
+    }
+    .App h1 {
+        padding: 0 10% 0 10%;
+    }
+}
