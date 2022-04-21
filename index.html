@@ -2,28 +2,32 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Balance Counter</title>
-    <link rel="stylesheet" href="styles.css">
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Balance Counter</title>
+  <link rel="stylesheet" href="styles.css">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 
 <body>
-    <div id="root"></div>
+  <div id="root"></div>
 
-    <script type="text/babel">
+  <script type="text/babel">
 
+    class App extends React.Component {
+          constructor(props) { // also works without if just state and not this.state
+          super(props); // also works without if just state and not this.state
+          this.state = {
+          balance: 0, 
+          add: "", 
+          withdraw: ""
+          };
+          }
 
-        class App extends React.Component {
-  state = {
-    balance: 0
-  };
-
-  componentDidMount() {
+  /*componentDidMount() {
                 const balance = localStorage.getItem('balance');
                 if (balance !== null) {
                     this.setState({
@@ -33,18 +37,24 @@
                 window.addEventListener('beforeunload', () => {
                     localStorage.setItem('balance', this.state.balance);
                 });
-            }
+            }*/
 
   handleSubmitAdd = (e) => {
     e.preventDefault();
-    this.setState({ balance: (parseInt(this.state.balance) + parseInt(this.state.num)) });
     e.target.reset();
-}
+    console.log("Add state", this.state.add);
+    if ( !(/^\d+$/.test(this.state.add))) {
+ alert("Enter a number");
+    } else { 
+    this.setState({ balance: (parseInt(this.state.balance) + parseInt(this.state.add)) });
+}}
 
 handleSubmitWithdraw = (e) => {
     e.preventDefault();
-    this.setState({ balance: (parseInt(this.state.balance) - parseInt(this.state.num)) });
-    e.target.reset();
+    if (isNaN(this.state.withdraw)) {
+ alert("Enter a number");
+    } else {     this.setState({ balance: (parseInt(this.state.balance) - parseInt(this.state.withdraw)) });
+    e.target.reset();}
 }
 
   render() {
@@ -56,8 +66,9 @@ handleSubmitWithdraw = (e) => {
             <div className="box">
           <input
             type="text"
-            placeholder="Enter Amount"
-             onChange={(e) => this.setState({ num: e.target.value })}
+            placeholder="Enter a number"
+            value={this.state.add}
+            onChange={(e) => this.setState({ add: e.target.value })}
           />
           <button type="submit">Add Money</button>
         </div>
@@ -66,8 +77,9 @@ handleSubmitWithdraw = (e) => {
             <div className="box">
           <input
             type="text"
-            placeholder="Enter Amount"
-            onChange={(e) => this.setState({ num: e.target.value })}
+            placeholder="Enter a number"
+            value={this.state.withdraw}
+            onChange={(e) => this.setState({ withdraw: e.target.value })}
           />
           <button type="submit">Withdraw Money</button>
         </div>
